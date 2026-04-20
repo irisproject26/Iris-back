@@ -4,30 +4,30 @@ using IRIS_API.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configura o Banco de Dados
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddControllers();
-
-// Ativa o Gerador do Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// ATENÇÃO AQUI: Isso ativa a interface visual
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "IRIS API V1");
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "IRIS API V1");
+    c.RoutePrefix = "swagger";
+});
 
-app.UseHttpsRedirection();
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin();
+    options.AllowAnyMethod();
+    options.AllowAnyHeader();
+});
+
 app.UseAuthorization();
 app.MapControllers();
 

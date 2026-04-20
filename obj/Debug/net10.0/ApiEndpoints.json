@@ -2,7 +2,7 @@
   {
     "ContainingType": "IRIS_API.Controllers.ReportsController",
     "Method": "PostReport",
-    "RelativePath": "api/Reports",
+    "RelativePath": "api/Denuncias",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -24,7 +24,7 @@
       },
       {
         "Name": "Urgency",
-        "Type": "IRIS_API.Models.UrgencyLevel",
+        "Type": "System.Int32",
         "IsRequired": false
       },
       {
@@ -43,7 +43,7 @@
   {
     "ContainingType": "IRIS_API.Controllers.ReportsController",
     "Method": "GetReports",
-    "RelativePath": "api/Reports/agente",
+    "RelativePath": "api/Denuncias/agente",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -164,6 +164,22 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "IRIS_API.Controllers.UsersController",
+    "Method": "Login",
+    "RelativePath": "api/Users/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "login",
+        "Type": "IRIS_API.DTOs.LoginRequest",
         "IsRequired": true
       }
     ],

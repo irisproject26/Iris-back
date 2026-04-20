@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using IRIS_API.Data;
 using IRIS_API.Models;
+using IRIS_API.DTOs;
 
 namespace IRIS_API.Controllers
 {
@@ -60,7 +61,7 @@ namespace IRIS_API.Controllers
                 else throw;
             }
 
-            return NoContent(); // Sucesso (204)
+            return NoContent(); 
         }
 
         // EXCLUIR USUÁRIO (DELETE)
@@ -74,6 +75,26 @@ namespace IRIS_API.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [HttpPost("Login")]
+        public async Task<ActionResult> Login([FromBody] LoginRequest login)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == login.Email && u.Senha == login.Senha);
+
+            if (user == null)
+            {
+                return Unauthorized(new { message = "E-mail ou senha incorretos." });
+            }
+
+            return Ok(new
+            {
+                id = user.Id,
+                nome = user.Nome,
+                email = user.Email,
+                role = user.Role
+            });
         }
     }
 }
